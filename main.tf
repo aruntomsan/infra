@@ -20,7 +20,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "s3_terraform_state" {
-  bucket = "terraform-state-bucket-2026"
+  bucket = "terraform-state-bucket-${data.aws_caller_identity.current.account_id}"
   tags = {
     Purpose = "tf State"
   }
