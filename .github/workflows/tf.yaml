@@ -12,13 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v6
         with:
             role-to-assume: arn:aws:iam::778477254970:oidc-provider/token.actions.githubusercontent.com
-            aws-region: AWS_REGION
+            aws-region: ${{ env.AWS_REGION }}
 
       - name: Test AWS Session
         run: aws sts get-caller-identity
