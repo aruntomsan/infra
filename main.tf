@@ -17,7 +17,7 @@ terraform {
 
 provider "aws" {
   region = "ap-south-2"
-  profile = "bootstrap-admin"
+  profile = "terraform"
 }
 
 resource "aws_s3_bucket" "s3_terraform_state" {
