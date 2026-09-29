@@ -20,3 +20,26 @@ provider "aws" {
 }
 
 data "aws_caller_identity" "current" {}
+
+variable "list_of_services" {
+  type    = set(string)
+  default = [
+  "adservice",
+  "cartservice",
+  "checkoutservice",
+  "currencyservice",
+  "emailservice",
+  "frontend",
+  "loadgenerator",
+  "paymentservice",
+  "productcatalogservice",
+  "recommendationservice",
+  "shippingservice",
+  "shoppingassistantservice"
+]  
+}
+
+resource "aws_ecr_repository" "repo_for_microservices" {
+  for_each = var.list_of_services
+  name     = each.value
+}
