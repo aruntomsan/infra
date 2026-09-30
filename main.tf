@@ -21,32 +21,6 @@ provider "aws" {
 
 data "aws_caller_identity" "current" {}
 
-data "aws_iam_role" "gha" {
-  name = "tf_s3_state"
-}
-
-resource "aws_iam_role_policy" "tf_ecr" {
-  name = "tf_ecr_policy"
-  role = data.aws_iam_role.gha.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Sid    = "ManageServiceRepositories"
-      Effect = "Allow"
-      Action = [
-        "ecr:CreateRepository", "ecr:DeleteRepository",
-        "ecr:DescribeRepositories",
-        "ecr:ListTagsForResource", "ecr:TagResource", "ecr:UntagResource",
-        "ecr:PutImageTagMutability", "ecr:PutImageScanningConfiguration",
-        "ecr:PutLifecyclePolicy", "ecr:GetLifecyclePolicy", "ecr:DeleteLifecyclePolicy"
-      ]
-      Resource = "arn:aws:ecr:ap-south-2:${data.aws_caller_identity.current.account_id}:repository/*"
-    }]
-  })
-}
-
-
 variable "list_of_services" {
   type    = set(string)
   default = [
