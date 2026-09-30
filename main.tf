@@ -27,7 +27,7 @@ data "aws_iam_role" "gha" {
 
 resource "aws_iam_role_policy" "tf_ecr" {
   name = "tf_ecr_policy"
-  role = aws_iam_role.gha.id
+  role = data.aws_iam_role.gha.id
 
   policy = jsonencode({
     Version = "2012-10-17"
