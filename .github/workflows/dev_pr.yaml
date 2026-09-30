@@ -1,15 +1,16 @@
-name: Create Terraform Infra
+name: Run Terraform Plan and Raise PR
 
 on:
-  push:
-    branches: [ "main" ]
+    push:
+      branches: [ "dev" ]
 
 env:
   AWS_REGION: ap-south-2      
 
 permissions:
   id-token: write 
-  contents: read 
+  contents: write
+  pull-requests: write 
 
 jobs:
   deploy:
@@ -36,7 +37,17 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan
-
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform plan -no-color > plan.txt
+    
+      - name: Open or update PR to main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR=$(gh pr list --head "$GITHUB_REF_NAME" --base main --state open --json number -q '.[0].number')
+          if [ -n "$PR" ]; then
+            gh pr edit "$PR" --body-file plan.txt
+          else
+            gh pr create --head "$GITHUB_REF_NAME" --base main \
+              --title "Terraform changes from $GITHUB_REF_NAME" \
+              --body-file plan.txt
+          fi
