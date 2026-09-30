@@ -39,10 +39,10 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -no-color > plan.txt
     
-      - name: Create Pull Request
+      - name: Open or update PR to main
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: 
+        run: |
           PR=$(gh pr list --head "$GITHUB_REF_NAME" --base main --state open --json number -q '.[0].number')
           if [ -n "$PR" ]; then
             gh pr edit "$PR" --body-file plan.txt
