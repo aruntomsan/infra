@@ -75,8 +75,7 @@ resource "aws_ecr_repository" "repo_for_microservices" {
   }
 
   encryption_configuration {
-    encryption_type = "KMS"
-    kms_key         = data.aws_kms_key.ecr.arn
+    encryption_type = "AES256"
   }
 }
 
