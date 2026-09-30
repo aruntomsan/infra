@@ -80,7 +80,7 @@ resource "aws_ecr_repository" "repo_for_microservices" {
 }
 
 resource "aws_ecr_lifecycle_policy" "this" {
-  for_each = aws_ecr_repository.this
+  for_each = aws_ecr_repository.repo_for_microservices
 
   repository = each.value.name
 
