@@ -81,6 +81,7 @@ resource "aws_ecr_lifecycle_policy" "this" {
 
         selection = {
           tagStatus   = "tagged"
+          tagPatternList = ["*"]
           countType   = "imageCountMoreThan"
           countNumber = 10
         }
