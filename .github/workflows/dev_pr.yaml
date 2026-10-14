@@ -33,8 +33,21 @@ jobs:
         with:
           terraform_version: 1.16.4
 
+      - name: Terraform FMT
+        run: terraform fmt -check -recursive
+
       - name: Terraform Init
         run: terraform init
+    
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Trivy Config Scan
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+            scan-type: config
+            scan-ref: ./
+            exit-code: 1
 
       - name: Terraform Plan
         run: terraform plan -no-color > plan.txt

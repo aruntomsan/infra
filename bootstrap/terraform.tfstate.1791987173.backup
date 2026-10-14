@@ -1,0 +1,203 @@
+{
+  "version": 4,
+  "terraform_version": "1.16.4",
+  "serial": 21,
+  "lineage": "ae764fb1-ffe6-7985-90a6-8affe5dd3c1e",
+  "outputs": {},
+  "resources": [
+    {
+      "mode": "data",
+      "type": "aws_caller_identity",
+      "name": "current",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "account_id": "778477254970",
+            "arn": "arn:aws:sts::778477254970:assumed-role/AWSReservedSSO_AdministratorAccess_543b546d73f38f82/bootstrap-admin",
+            "id": "778477254970",
+            "user_id": "AROA3KQG4HE5CG3DPMH65:bootstrap-admin"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_openid_connect_provider",
+      "name": "gh_actions_oidc",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::778477254970:oidc-provider/token.actions.githubusercontent.com",
+            "client_id_list": [
+              "sts.amazonaws.com"
+            ],
+            "id": "arn:aws:iam::778477254970:oidc-provider/token.actions.githubusercontent.com",
+            "tags": {},
+            "tags_all": {},
+            "thumbprint_list": [
+              "ab9d0263244dd0326eb67015705a667e79cfe998"
+            ],
+            "url": "token.actions.githubusercontent.com"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "arn": "arn:aws:iam::778477254970:oidc-provider/token.actions.githubusercontent.com"
+          },
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "gha_oidc_role",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::778477254970:role/gha-oidc-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRoleWithWebIdentity\",\"Condition\":{\"StringEquals\":{\"token.actions.githubusercontent.com:aud\":\"sts.amazonaws.com\"},\"StringLike\":{\"token.actions.githubusercontent.com:sub\":[\"repo:aruntomsan@111147301/adservice@1387353019:ref:refs/heads/main\",\"repo:aruntomsan@111147301/cartservice@1387357358:ref:refs/heads/main\",\"repo:aruntomsan@111147301/catalogservice@1387368626:ref:refs/heads/main\",\"repo:aruntomsan@111147301/checkoutservice@1387359561:ref:refs/heads/main\",\"repo:aruntomsan@111147301/currencyservice@1387361273:ref:refs/heads/main\",\"repo:aruntomsan@111147301/emailservice@1387362702:ref:refs/heads/main\",\"repo:aruntomsan@111147301/frontendservice@1387364332:ref:refs/heads/main\",\"repo:aruntomsan@111147301/infra@1389184781:ref:refs/heads/main\",\"repo:aruntomsan@111147301/loadgen@1387365686:ref:refs/heads/main\",\"repo:aruntomsan@111147301/paymentservice@1387367125:ref:refs/heads/main\",\"repo:aruntomsan@111147301/rec-service@1387370438:ref:refs/heads/main\",\"repo:aruntomsan@111147301/shippingservice@1387372189:ref:refs/heads/main\",\"repo:aruntomsan@111147301/shopping-service@1387374036:ref:refs/heads/main\",\"repo:aruntomsan@111147301/infra@1389184781:ref:refs/heads/dev\"]}},\"Effect\":\"Allow\",\"Principal\":{\"Federated\":\"arn:aws:iam::778477254970:oidc-provider/token.actions.githubusercontent.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-09-30T16:30:15Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "gha-oidc-role",
+            "inline_policy": [
+              {
+                "name": "tf_ecr_policy",
+                "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"ecr:CreateRepository\",\"ecr:DeleteRepository\",\"ecr:DescribeRepositories\",\"ecr:ListTagsForResource\",\"ecr:TagResource\",\"ecr:UntagResource\",\"ecr:PutImageTagMutability\",\"ecr:PutImageScanningConfiguration\",\"ecr:PutLifecyclePolicy\",\"ecr:GetLifecyclePolicy\",\"ecr:DeleteLifecyclePolicy\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:ecr:ap-south-2:778477254970:repository/*\",\"Sid\":\"ManageServiceRepositories\"},{\"Action\":\"ecr:GetAuthorizationToken\",\"Effect\":\"Allow\",\"Resource\":\"*\",\"Sid\":\"EcrLogin\"},{\"Action\":[\"ecr:BatchGetImage\",\"ecr:GetDownloadUrlForLayer\",\"ecr:InitiateLayerUpload\",\"ecr:UploadLayerPart\",\"ecr:CompleteLayerUpload\",\"ecr:PutImage\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:ecr:ap-south-2:778477254970:repository/*\",\"Sid\":\"PushImages\"}]}"
+              },
+              {
+                "name": "tf_state_policy",
+                "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"s3:GetBucketLocation\",\"s3:ListBucket\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:s3:::terraform-state-bucket-778477254970\",\"Sid\":\"StateBucket\"},{\"Action\":[\"s3:GetObject\",\"s3:PutObject\",\"s3:DeleteObject\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::terraform-state-bucket-778477254970/terraform.tfstate\",\"arn:aws:s3:::terraform-state-bucket-778477254970/terraform.tfstate.tflock\"],\"Sid\":\"StateObjects\"}]}"
+              }
+            ],
+            "managed_policy_arns": [],
+            "max_session_duration": 3600,
+            "name": "gha-oidc-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {},
+            "tags_all": {},
+            "unique_id": "AROA3KQG4HE5K4NG6LN4O"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "778477254970",
+            "name": "gha-oidc-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_openid_connect_provider.gh_actions_oidc"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy",
+      "name": "tf_ecr",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "gha-oidc-role:tf_ecr_policy",
+            "name": "tf_ecr_policy",
+            "name_prefix": "",
+            "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"ecr:CreateRepository\",\"ecr:DeleteRepository\",\"ecr:DescribeRepositories\",\"ecr:ListTagsForResource\",\"ecr:TagResource\",\"ecr:UntagResource\",\"ecr:PutImageTagMutability\",\"ecr:PutImageScanningConfiguration\",\"ecr:PutLifecyclePolicy\",\"ecr:GetLifecyclePolicy\",\"ecr:DeleteLifecyclePolicy\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:ecr:ap-south-2:778477254970:repository/*\",\"Sid\":\"ManageServiceRepositories\"},{\"Action\":\"ecr:GetAuthorizationToken\",\"Effect\":\"Allow\",\"Resource\":\"*\",\"Sid\":\"EcrLogin\"},{\"Action\":[\"ecr:BatchGetImage\",\"ecr:GetDownloadUrlForLayer\",\"ecr:InitiateLayerUpload\",\"ecr:UploadLayerPart\",\"ecr:CompleteLayerUpload\",\"ecr:PutImage\",\"ecr:BatchCheckLayerAvailability\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:ecr:ap-south-2:778477254970:repository/*\",\"Sid\":\"PushImages\"}]}",
+            "role": "gha-oidc-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "778477254970",
+            "name": "tf_ecr_policy",
+            "role": "gha-oidc-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_openid_connect_provider.gh_actions_oidc",
+            "aws_iam_role.gha_oidc_role",
+            "data.aws_caller_identity.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy",
+      "name": "tf_state",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "gha-oidc-role:tf_state_policy",
+            "name": "tf_state_policy",
+            "name_prefix": "",
+            "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"s3:GetBucketLocation\",\"s3:ListBucket\"],\"Effect\":\"Allow\",\"Resource\":\"arn:aws:s3:::terraform-state-bucket-778477254970\",\"Sid\":\"StateBucket\"},{\"Action\":[\"s3:GetObject\",\"s3:PutObject\",\"s3:DeleteObject\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::terraform-state-bucket-778477254970/terraform.tfstate\",\"arn:aws:s3:::terraform-state-bucket-778477254970/terraform.tfstate.tflock\"],\"Sid\":\"StateObjects\"}]}",
+            "role": "gha-oidc-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "778477254970",
+            "name": "tf_state_policy",
+            "role": "gha-oidc-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_openid_connect_provider.gh_actions_oidc",
+            "aws_iam_role.gha_oidc_role",
+            "aws_s3_bucket.s3_terraform_state",
+            "data.aws_caller_identity.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_s3_bucket_public_access_block",
+      "name": "state",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "block_public_acls": true,
+            "block_public_policy": true,
+            "bucket": "terraform-state-bucket-778477254970",
+            "id": "terraform-state-bucket-778477254970",
+            "ignore_public_acls": true,
+            "region": "ap-south-2",
+            "restrict_public_buckets": true,
+            "skip_destroy": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "778477254970",
+            "bucket": "terraform-state-bucket-778477254970",
+            "region": "ap-south-2"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_s3_bucket.s3_terraform_state",
+            "data.aws_caller_identity.current"
+          ]
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}
